@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import java.time.LocalDateTime;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sample.practicaltesting.unit.beverage.Americano;
 import sample.practicaltesting.unit.beverage.Latte;
@@ -11,6 +12,7 @@ import sample.practicaltesting.unit.order.Order;
 
 class CafeKioskTest {
 
+    @DisplayName("음료 1개를 추가하면 주문 목록에 담긴다.")
     @Test
     void add() {
         // given
