@@ -3,9 +3,11 @@ package sample.practicaltesting.unit;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import sample.practicaltesting.unit.beverage.Americano;
 import sample.practicaltesting.unit.beverage.Latte;
+import sample.practicaltesting.unit.order.Order;
 
 class CafeKioskTest {
 
@@ -80,5 +82,33 @@ class CafeKioskTest {
 
         // then
         assertThat(cafeKiosk.getBeverages()).isEmpty();
+    }
+
+    @Test
+    void createOrder() {
+        // given
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        Americano americano = new Americano();
+        cafeKiosk.add(americano);
+
+        // when
+        Order order = cafeKiosk.createOrder(LocalDateTime.of(2023, 12, 11, 10, 0));
+
+        //then
+        assertThat(order.beverages()).hasSize(1);
+        assertThat(order.beverages().get(0).getName()).isEqualTo("아메리카노");
+    }
+
+    @Test
+    void createOrderOutsideOpenTime() {
+        // given
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        Americano americano = new Americano();
+        cafeKiosk.add(americano);
+
+        // when & then
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> cafeKiosk.createOrder(LocalDateTime.of(2023, 12, 11, 9, 59)))
+                .withMessage("주문 시간이 아닙니다.");
     }
 }
