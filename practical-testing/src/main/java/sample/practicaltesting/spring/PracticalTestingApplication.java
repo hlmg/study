@@ -1,4 +1,4 @@
-package sample.practicaltesting;
+package sample.practicaltesting.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
