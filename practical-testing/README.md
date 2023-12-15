@@ -33,3 +33,8 @@
 ## Persistence Layer
 - Data Access 역할
 - 비즈니스 가공 로직이 포함되면 안됨, Data에 대한 CRUD에만 집중하자.
+
+## Business Layer
+- 비즈니스 로직 구현
+- Persistence Layer와 상호작용을 통해 비즈니스 로직을 전개한다.
+- 트랜잭션을 보장해야 한다.
