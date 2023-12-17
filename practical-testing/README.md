@@ -38,3 +38,14 @@
 - 비즈니스 로직 구현
 - Persistence Layer와 상호작용을 통해 비즈니스 로직을 전개한다.
 - 트랜잭션을 보장해야 한다.
+
+## Presentation Layer
+- 요청을 가장 먼저 받는 계층
+- 파라미터에 대한 최소한의 검증 수행
+
+## CQRS
+- Command / Query 서비스 분리
+- DB Endpoint 분리: Command는 Primary, Read는 Replication
+- Transactional의 readonly 값에 따라 해당하는 DB Endpoint 호출하기
+  - Aurora DB 클러스터 모드 사용: 같은 Endpoint로 보내면 readonly 값을 보고 구분을 해줌
+  - Endpoint를 따로 두고 Spring에서 annotation 값에 따라 구분해서 요청하기
