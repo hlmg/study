@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import sample.practicaltesting.spring.api.controller.product.dto.request.ProductCreateRequest;
+import sample.practicaltesting.spring.api.service.product.request.ProductCreateServiceRequest;
 import sample.practicaltesting.spring.api.service.product.response.ProductResponse;
 import sample.practicaltesting.spring.domain.product.Product;
 import sample.practicaltesting.spring.domain.product.ProductRepository;
@@ -43,7 +43,7 @@ class ProductServiceTest {
         productRepository.save(product);
 
         // when
-        ProductCreateRequest request = ProductCreateRequest.builder()
+        ProductCreateServiceRequest request = ProductCreateServiceRequest.builder()
                 .name("카푸치노")
                 .type(HANDMADE)
                 .sellingStatus(SELLING)
@@ -69,7 +69,7 @@ class ProductServiceTest {
     @Test
     void createProductWhenEmptyProduct() {
         // when
-        ProductCreateRequest request = ProductCreateRequest.builder()
+        ProductCreateServiceRequest request = ProductCreateServiceRequest.builder()
                 .name("카푸치노")
                 .type(HANDMADE)
                 .sellingStatus(SELLING)
