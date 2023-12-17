@@ -49,3 +49,14 @@
 - Transactional의 readonly 값에 따라 해당하는 DB Endpoint 호출하기
   - Aurora DB 클러스터 모드 사용: 같은 Endpoint로 보내면 readonly 값을 보고 구분을 해줌
   - Endpoint를 따로 두고 Spring에서 annotation 값에 따라 구분해서 요청하기
+
+## Validation 책임
+- 도메인 정책에 대한 검증 (e.g. 상품 이름 20자 제한)은 서비스 or 도메인 생성자에서
+- Controller가 받는 request는 기본 값 검증만 진행 (e.g. 유효한 문자열이면 합당히 가져야 할 validation(not empty))
+
+## ApiResponse
+- 클라이언트와 협의해서 응답 포맷을 정의하자.
+- 단순한 방법을 사용해도 됨
+  - 정상 응답: 포장하지 않고 Data만 응답
+  - 에러 응답: 에러 포맷을 정의해서 에러코드, 예외 메세지 등을 넘김
+    - e.g. Spring 6.0.x 부터 추가된 ProblemDetail 사용(RFC 7807)
