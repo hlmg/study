@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import sample.practicaltesting.spring.api.service.order.request.OrderCreateServiceRequest;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -16,5 +17,11 @@ public class OrderCreateRequest {
     @Builder
     private OrderCreateRequest(List<String> productNumbers) {
         this.productNumbers = productNumbers;
+    }
+
+    public OrderCreateServiceRequest toServiceRequest() {
+        return OrderCreateServiceRequest.builder()
+                .productNumbers(productNumbers)
+                .build();
     }
 }

@@ -60,3 +60,11 @@
   - 정상 응답: 포장하지 않고 Data만 응답
   - 에러 응답: 에러 포맷을 정의해서 에러코드, 예외 메세지 등을 넘김
     - e.g. Spring 6.0.x 부터 추가된 ProblemDetail 사용(RFC 7807)
+
+## Request DTO 분리
+- Controller로 받는 request DTO를 그대로 service에 사용하지 말자(service가 controller layer에 의존, 하위 레이어가 상위를 의존하는 문제)
+- 서비스가 커져서 모듈을 분리할 때 이 점이 허들이 됨
+- service용 RequestDto를 만들어서 분리하자.
+  - 이렇게 하면, ControllerRequestDto만 검증 책임을 가져가게 됨
+  - ServiceRequestDto는 Entity 변환 책임만 담당
+- service를 사용하는 다양한 채널이 생겨도 특정 컨트롤러의 DTO에 의존하지 않아 확장이 쉬움

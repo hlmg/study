@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sample.practicaltesting.spring.api.controller.order.request.OrderCreateRequest;
 import sample.practicaltesting.spring.api.service.order.response.OrderResponse;
 import sample.practicaltesting.spring.domain.order.Order;
 import sample.practicaltesting.spring.domain.order.OrderRepository;
+import sample.practicaltesting.spring.api.service.order.request.OrderCreateServiceRequest;
 import sample.practicaltesting.spring.domain.product.Product;
 import sample.practicaltesting.spring.domain.product.ProductRepository;
 import sample.practicaltesting.spring.domain.product.ProductType;
@@ -31,7 +31,7 @@ public class OrderService {
      * 재고 감소, 동시성 고민
      * optimistic/pessimistic lock
      */
-    public OrderResponse createOrder(OrderCreateRequest request, LocalDateTime registeredDateTime) {
+    public OrderResponse createOrder(OrderCreateServiceRequest request, LocalDateTime registeredDateTime) {
         List<String> productNumbers = request.getProductNumbers();
         List<Product> products = findProductsBy(productNumbers);
 

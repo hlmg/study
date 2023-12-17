@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sample.practicaltesting.spring.api.controller.product.dto.request.ProductCreateRequest;
+import sample.practicaltesting.spring.api.service.product.request.ProductCreateServiceRequest;
 import sample.practicaltesting.spring.api.service.product.response.ProductResponse;
 import sample.practicaltesting.spring.domain.product.Product;
 import sample.practicaltesting.spring.domain.product.ProductRepository;
@@ -22,7 +22,7 @@ public class ProductService {
      * 빈도수가 높으면, 증가하는 값이 아닌 UUID를 가져가는 방법도 고려
      */
     @Transactional
-    public ProductResponse createProduct(ProductCreateRequest request) {
+    public ProductResponse createProduct(ProductCreateServiceRequest request) {
         String nextProductNumber = createNextProductNumber();
         Product entity = request.toEntity(nextProductNumber);
         Product savedProduct = productRepository.save(entity);

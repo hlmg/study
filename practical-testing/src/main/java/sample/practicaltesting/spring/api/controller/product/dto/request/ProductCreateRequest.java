@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.Getter;
+import sample.practicaltesting.spring.api.service.product.request.ProductCreateServiceRequest;
 import sample.practicaltesting.spring.domain.product.Product;
 import sample.practicaltesting.spring.domain.product.ProductSellingStatus;
 import sample.practicaltesting.spring.domain.product.ProductType;
@@ -31,9 +32,8 @@ public class ProductCreateRequest {
         this.price = price;
     }
 
-    public Product toEntity(String nextProductNumber) {
-        return Product.builder()
-                .productNumber(nextProductNumber)
+    public ProductCreateServiceRequest toServiceRequest() {
+        return ProductCreateServiceRequest.builder()
                 .type(type)
                 .sellingStatus(sellingStatus)
                 .name(name)
