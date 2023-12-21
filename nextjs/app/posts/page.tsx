@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from "next/link";
+import CreatePost from "@/app/posts/CreatePost";
 
 async function getPost() {
   const res = await fetch('http://127.0.0.1:8090/api/collections/posts/records', {cache: "no-store"});
@@ -15,6 +16,7 @@ const PostsPage = async () => {
       {posts?.map((post) => {
         return <PostItem key={post.id} post={post}/>
       })}
+      <CreatePost/>
     </div>
   );
 };
