@@ -6,31 +6,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import sample.practicaltesting.spring.ControllerTestSupport;
 import sample.practicaltesting.spring.api.controller.product.dto.request.ProductCreateRequest;
-import sample.practicaltesting.spring.api.service.product.ProductService;
 import sample.practicaltesting.spring.domain.product.ProductSellingStatus;
 import sample.practicaltesting.spring.domain.product.ProductType;
 
-@WebMvcTest(controllers = ProductController.class)
-class ProductControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    // 컨테이너에 productService 빈 대신 MockBean 주입
-    @MockBean
-    private ProductService productService;
+class ProductControllerTest extends ControllerTestSupport {
 
     @DisplayName("신규 상품을 등록한다.")
     @Test
