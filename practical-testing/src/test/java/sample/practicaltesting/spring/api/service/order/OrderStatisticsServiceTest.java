@@ -13,9 +13,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import sample.practicaltesting.spring.client.mail.MailSendClient;
+import sample.practicaltesting.spring.IntegrationTestSupport;
 import sample.practicaltesting.spring.domain.history.mail.MailSendHistory;
 import sample.practicaltesting.spring.domain.history.mail.MailSendHistoryRepository;
 import sample.practicaltesting.spring.domain.order.Order;
@@ -26,8 +24,7 @@ import sample.practicaltesting.spring.domain.product.Product;
 import sample.practicaltesting.spring.domain.product.ProductRepository;
 import sample.practicaltesting.spring.domain.product.ProductType;
 
-@SpringBootTest
-class OrderStatisticsServiceTest {
+class OrderStatisticsServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private OrderStatisticsService orderStatisticsService;
@@ -43,9 +40,6 @@ class OrderStatisticsServiceTest {
 
     @Autowired
     private MailSendHistoryRepository mailSendHistoryRepository;
-
-    @MockBean
-    private MailSendClient mailSendClient;
 
     @AfterEach
     void tearDown() {
