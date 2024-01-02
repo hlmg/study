@@ -1,9 +1,11 @@
 import React from 'react';
 import './App.css';
+import DiaryEditor from "./DiaryEditor";
 
 function App() {
   return (
     <div className="App">
+      <DiaryEditor/>
     </div>
   );
 }
