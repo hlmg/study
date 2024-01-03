@@ -1,11 +1,45 @@
 import React from 'react';
 import './App.css';
 import DiaryEditor from "./DiaryEditor";
+import DiaryList from "./DiaryList";
+import {Diary} from "./model/diary";
+
+const dummyList: Diary[] = [
+  {
+    id: 1,
+    author: "user1",
+    content: "content",
+    emotion: 2,
+    created_date: new Date().getTime(),
+  },
+  {
+    id: 2,
+    author: "user2",
+    content: "content",
+    emotion: 4,
+    created_date: new Date().getTime(),
+  },
+  {
+    id: 3,
+    author: "user3",
+    content: "content",
+    emotion: 4,
+    created_date: new Date().getTime(),
+  },
+  {
+    id: 4,
+    author: "user4",
+    content: "content",
+    emotion: 5,
+    created_date: new Date().getTime(),
+  }
+]
 
 function App() {
   return (
     <div className="App">
       <DiaryEditor/>
+      <DiaryList diaryList={dummyList}/>
     </div>
   );
 }
