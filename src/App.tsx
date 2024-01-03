@@ -10,6 +10,12 @@ function App() {
 
   const dataId = useRef(0);
 
+  const onEdit = ({id, content}: Pick<Diary, "id" | "content">) => {
+    setData(data
+      .map(d => d.id === id ? {...d, content: content} : d)
+    );
+  }
+
   const onCreate = ({author, content, emotion}: Omit<Diary, "created_date" | "id">) => {
     const created_date = new Date().getTime();
     const newItem = {
@@ -30,7 +36,7 @@ function App() {
   return (
     <div className="App">
       <DiaryEditor onCreate={onCreate}/>
-      <DiaryList onDelete={onDelete} diaryList={data}/>
+      <DiaryList onEdit={onEdit} onDelete={onDelete} diaryList={data}/>
     </div>
   );
 }
