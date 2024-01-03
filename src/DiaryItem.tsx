@@ -1,6 +1,10 @@
 import {Diary} from "./model/diary";
 
-const DiaryItem = ({author, content, emotion, created_date}: Omit<Diary, 'id'>) => {
+interface DiaryItemProps extends Diary {
+  onDelete: ({id}: Pick<Diary, "id">) => void;
+}
+
+const DiaryItem = ({id, author, content, emotion, created_date, onDelete}: DiaryItemProps) => {
   return (
     <div className="DiaryItem">
       <div className="info">
@@ -11,6 +15,13 @@ const DiaryItem = ({author, content, emotion, created_date}: Omit<Diary, 'id'>) 
         <span className="date">{new Date(created_date).toLocaleString()}</span>
       </div>
       <div className="content">{content}</div>
+      <button onClick={() => {
+        if (window.confirm(`${id}번째 일기를 정말 삭제하시겠습니까?`)) {
+          onDelete({id});
+        }
+      }}>
+        삭제하기
+      </button>
     </div>
   );
 };
