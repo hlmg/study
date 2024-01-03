@@ -3,6 +3,7 @@ import './App.css';
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
 import {Diary} from "./model/diary";
+import LifeCycle from "./LifeCycle";
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
 
   return (
     <div className="App">
+      <LifeCycle></LifeCycle>
       <DiaryEditor onCreate={onCreate}/>
       <DiaryList onEdit={onEdit} onDelete={onDelete} diaryList={data}/>
     </div>
