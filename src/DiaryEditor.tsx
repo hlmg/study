@@ -1,8 +1,13 @@
 import React, {useRef, useState} from "react";
+import {Diary} from "./model/diary";
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
 
-const DiaryEditor = () => {
+interface DiaryEditorProps {
+  onCreate(diary: Omit<Diary, "created_date" | "id">): void;
+}
+
+const DiaryEditor = ({onCreate}: DiaryEditorProps) => {
   const authorInput = useRef<HTMLInputElement>(null);
   const contentInput = useRef<HTMLTextAreaElement>(null);
 
@@ -30,7 +35,15 @@ const DiaryEditor = () => {
       return;
     }
 
+    onCreate(state)
+
     alert("저장 성공");
+
+    setState({
+      author: "",
+      content: "",
+      emotion: 1,
+    });
   };
 
   return (

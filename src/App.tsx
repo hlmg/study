@@ -1,45 +1,32 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import './App.css';
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
 import {Diary} from "./model/diary";
 
-const dummyList: Diary[] = [
-  {
-    id: 1,
-    author: "user1",
-    content: "content",
-    emotion: 2,
-    created_date: new Date().getTime(),
-  },
-  {
-    id: 2,
-    author: "user2",
-    content: "content",
-    emotion: 4,
-    created_date: new Date().getTime(),
-  },
-  {
-    id: 3,
-    author: "user3",
-    content: "content",
-    emotion: 4,
-    created_date: new Date().getTime(),
-  },
-  {
-    id: 4,
-    author: "user4",
-    content: "content",
-    emotion: 5,
-    created_date: new Date().getTime(),
-  }
-]
-
 function App() {
+
+  const [data, setData] = useState<Diary[]>([]);
+
+  const dataId = useRef(0);
+
+  const onCreate = ({author, content, emotion}: Omit<Diary, "created_date" | "id">) => {
+    const created_date = new Date().getTime();
+    const newItem = {
+      author,
+      content,
+      emotion,
+      created_date,
+      id: dataId.current,
+    };
+    dataId.current += 1;
+    setData([newItem, ...data]);
+  };
+
   return (
     <div className="App">
-      <DiaryEditor/>
-      <DiaryList diaryList={dummyList}/>
+      <DiaryEditor onCreate={onCreate}/>
+      <DiaryList diaryList={data}/>
     </div>
   );
 }
