@@ -1,17 +1,37 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import './App.css';
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
-import {Diary} from "./model/diary";
+import {Diary, DiaryAction} from "./model/diary";
 
 type FetchData = {
   email: string;
   body: string;
 };
 
+const reducer = (state: Diary[], action: DiaryAction) => {
+  switch (action.type) {
+    case 'INIT':
+      return action.data;
+    case 'CREATE':
+      const created_date = new Date().getTime();
+      const newItem = {
+        ...action.data,
+        created_date
+      }
+      return [newItem, ...state];
+    case 'DELETE':
+      return state.filter(d => d.id !== action.id)
+    case 'EDIT':
+      return state.map(d => d.id === action.id ? {...d, content: action.content} : d)
+    default:
+      return state;
+  }
+};
+
 function App() {
 
-  const [data, setData] = useState<Diary[]>([]);
+  const [data, dispatch] = useReducer(reducer, [])
 
   const dataId = useRef(0);
 
@@ -19,7 +39,7 @@ function App() {
     const res: FetchData[] = await fetch('https://jsonplaceholder.typicode.com/comments')
       .then(res => res.json());
 
-    const initData = res.slice(0, 20)
+    const data: Diary[] = res.slice(0, 20)
       .map(d => {
         return {
           author: d.email,
@@ -30,7 +50,7 @@ function App() {
         }
       });
 
-    setData(initData)
+    dispatch({type: 'INIT', data})
   }
 
   useEffect(() => {
@@ -38,27 +58,19 @@ function App() {
   }, []);
 
   const onEdit = useCallback(({id, content}: Pick<Diary, "id" | "content">) => {
-    setData((data) =>
-      data.map(d => d.id === id ? {...d, content: content} : d)
-    );
+    dispatch({type: 'EDIT', id, content})
   }, [])
 
   const onCreate = useCallback(({author, content, emotion}: Omit<Diary, "created_date" | "id">) => {
-    const created_date = new Date().getTime();
-    const newItem = {
-      author,
-      content,
-      emotion,
-      created_date,
-      id: dataId.current,
-    };
+    dispatch({
+      type: 'CREATE',
+      data: {author, content, emotion, id: dataId.current}
+    })
     dataId.current += 1;
-    // 함수형 업데이트
-    setData((data) => [newItem, ...data]);
   }, []);
 
   const onDelete = useCallback(({id}: Pick<Diary, "id">) => {
-    setData(data => data.filter(d => d.id !== id))
+    dispatch({type: 'DELETE', id: id});
   }, [])
 
   const getDiaryAnalysis = useMemo(() => {
