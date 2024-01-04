@@ -1,13 +1,11 @@
-import React, {useEffect, useRef, useState} from "react";
-import {Diary} from "./model/diary";
+import React, {useContext, useEffect, useRef, useState} from "react";
+import {DiaryDispatchContext} from "./App";
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
 
-interface DiaryEditorProps {
-  onCreate(diary: Omit<Diary, "created_date" | "id">): void;
-}
+const DiaryEditor = () => {
+  const {onCreate} = useContext(DiaryDispatchContext)!;
 
-const DiaryEditor = ({onCreate}: DiaryEditorProps) => {
   useEffect(() => {
     console.log("DiaryEditor 렌더")
   }, );

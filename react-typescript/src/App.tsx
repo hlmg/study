@@ -9,6 +9,12 @@ type FetchData = {
   body: string;
 };
 
+type MemoizedDispatcher = {
+  onCreate: ({author, content, emotion}: Omit<Diary, "created_date" | "id">) => void;
+  onDelete: ({id}: Pick<Diary, "id">) => void;
+  onEdit: ({id, content}: Pick<Diary, "id" | "content">) => void;
+}
+
 const reducer = (state: Diary[], action: DiaryAction) => {
   switch (action.type) {
     case 'INIT':
@@ -28,6 +34,10 @@ const reducer = (state: Diary[], action: DiaryAction) => {
       return state;
   }
 };
+
+export const DiaryStateContext = React.createContext<Diary[]>([]);
+export const DiaryDispatchContext = React.createContext<MemoizedDispatcher | undefined>(undefined);
+
 
 function App() {
 
@@ -73,6 +83,10 @@ function App() {
     dispatch({type: 'DELETE', id: id});
   }, [])
 
+  const memoizedDispatches = useMemo(() => {
+    return {onCreate, onDelete, onEdit};
+  }, []);
+
   const getDiaryAnalysis = useMemo(() => {
     const goodCount = data.filter(d => d.emotion >= 3).length;
     const badCount = data.length - goodCount;
@@ -83,14 +97,18 @@ function App() {
   const {goodCount, badCount, goodRatio} = getDiaryAnalysis;
 
   return (
-    <div className="App">
-      <DiaryEditor onCreate={onCreate}/>
-      <div>전체 일기 : {data.length}</div>
-      <div>기분 좋은 일기 : {goodCount}</div>
-      <div>기분 나쁜 일기 : {badCount}</div>
-      <div>기분 좋은 일기 비율: {goodRatio}</div>
-      <DiaryList onEdit={onEdit} onDelete={onDelete} diaryList={data}/>
-    </div>
+    <DiaryStateContext.Provider value={data}>
+      <DiaryDispatchContext.Provider value={memoizedDispatches}>
+        <div className="App">
+          <DiaryEditor/>
+          <div>전체 일기 : {data.length}</div>
+          <div>기분 좋은 일기 : {goodCount}</div>
+          <div>기분 나쁜 일기 : {badCount}</div>
+          <div>기분 좋은 일기 비율: {goodRatio}</div>
+          <DiaryList/>
+        </div>
+      </DiaryDispatchContext.Provider>
+    </DiaryStateContext.Provider>
   );
 }
 

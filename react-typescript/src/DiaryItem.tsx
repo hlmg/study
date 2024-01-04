@@ -1,12 +1,9 @@
 import {Diary} from "./model/diary";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
+import {DiaryDispatchContext} from "./App";
 
-interface DiaryItemProps extends Diary {
-  onDelete: ({id}: Pick<Diary, "id">) => void;
-  onEdit: ({id, content}: Pick<Diary, "id" | "content">) => void;
-}
-
-const DiaryItem = ({id, author, content, emotion, created_date, onDelete, onEdit}: DiaryItemProps) => {
+const DiaryItem = ({id, author, content, emotion, created_date}: Diary) => {
+  const {onEdit, onDelete} = useContext(DiaryDispatchContext)!;
 
   useEffect(() => {
     console.log(`${id}번 째 아이템 렌더`);
