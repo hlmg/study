@@ -1,5 +1,5 @@
 import {Diary} from "./model/diary";
-import {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 interface DiaryItemProps extends Diary {
   onDelete: ({id}: Pick<Diary, "id">) => void;
@@ -7,6 +7,10 @@ interface DiaryItemProps extends Diary {
 }
 
 const DiaryItem = ({id, author, content, emotion, created_date, onDelete, onEdit}: DiaryItemProps) => {
+
+  useEffect(() => {
+    console.log(`${id}번 째 아이템 렌더`);
+  },);
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [localContent, setLocalContent] = useState(content);
@@ -72,4 +76,4 @@ const DiaryItem = ({id, author, content, emotion, created_date, onDelete, onEdit
   );
 };
 
-export default DiaryItem;
+export default React.memo(DiaryItem);

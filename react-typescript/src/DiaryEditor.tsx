@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Diary} from "./model/diary";
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
@@ -8,6 +8,10 @@ interface DiaryEditorProps {
 }
 
 const DiaryEditor = ({onCreate}: DiaryEditorProps) => {
+  useEffect(() => {
+    console.log("DiaryEditor 렌더")
+  }, );
+
   const authorInput = useRef<HTMLInputElement>(null);
   const contentInput = useRef<HTMLTextAreaElement>(null);
 
@@ -86,4 +90,4 @@ const DiaryEditor = ({onCreate}: DiaryEditorProps) => {
   );
 };
 
-export default DiaryEditor;
+export default React.memo(DiaryEditor);
